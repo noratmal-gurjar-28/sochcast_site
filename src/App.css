@@ -1,0 +1,176 @@
+/* ShowList.css */
+
+.show-list-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 4 columns with equal width */
+  gap: 40px; /* Space between grid items */
+  padding: 20px; /* Optional padding around the grid */
+}
+
+.popup-overlay{
+  position: relative;
+}
+
+.close-popup{
+  position: absolute;
+  top: 20%;
+  left: 70%;
+  text-align: center;
+}
+
+.audio-tag{
+  position: absolute;
+  left: 50%;
+  width: 500px;
+  height: 225px;
+  bottom: 27px;
+}
+
+.btn-play{
+  background: blue;
+  color: #fff;
+  letter-spacing: 1px;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  width: 100px;
+}
+
+.show-item{
+  cursor: pointer;
+}
+
+.bg-dark-color{
+  background-color: #206087;
+}
+
+.name-title{
+  font-size: 12px;
+  color: #233565;
+  padding: 4px;
+}
+
+.name-title:hover{
+  color: rgb(61, 131, 187);
+}
+
+
+.show-item {
+  background-color: #f4f4f4; /* Background color for each show item */
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.show-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.show-item h3 {
+  margin-top: 10px;
+  font-size: 1.2em;
+}
+
+.card-container{
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.episode-name{
+  font-size: 17px;
+  font-weight: 500;
+  font-family: "lato";
+  cursor: pointer;
+}
+
+.img-epsido{
+  width: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+
+
+.episode-name:hover{
+  color: rgb(34, 89, 34);
+  cursor: pointer;
+}
+
+.icon-pointer{
+  cursor: pointer;
+}
+
+.bg-color{
+  background-color: rgb(183 233 233);
+}
+
+h1{
+  font-family: "Lato";
+}
+
+
+.episodes-para{
+  font-size: 20px;
+  font-family: "Lato";
+  text-align: justify;
+  color: #000;
+  /* background: none !important; */
+  background-color:rgb(254 254 254)!important;
+}
+.episodes-para span{
+  background-color:rgb(183 233 233) !important;
+  font-size: 22px;
+}
+
+.image-card img{
+  width: 100px;
+  height: 85px;
+  object-fit: cover;
+  margin: 10px 20px;
+}
+
+
+h3 u{
+  font-family: "Lato";
+}
+
+@media only screen and (max-width: 768px) {
+  .show-list-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* 4 columns with equal width */
+    gap: 40px; /* Space between grid items */
+    padding: 20px; /* Optional padding around the grid */
+  }
+
+  .image-card img{
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    margin: 20px 20px;
+    border:2px solid #000
+  }
+
+  .episode-name{
+    font-size: 17px;
+    font-weight: 500;
+    font-family: "lato";
+    cursor: pointer;
+    color: green;
+    font-weight: 500;
+  }
+
+  .card-container{
+    display: flow;
+    justify-content: left;
+    align-items: center;
+    background: #ddd;
+    margin: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+}

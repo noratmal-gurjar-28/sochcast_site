@@ -170,6 +170,11 @@ h3 u{
     padding: 20px; /* Optional padding around the grid */
   }
 
+  .episodes-para{
+    background-color: none;
+    background: none !important;
+  }
+
   .image-card img{
     width: 100%;
     height: 100px;

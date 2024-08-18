@@ -27,13 +27,13 @@
 }
 
 .btn-play{
-  background: blue;
+  background: #206087;
   color: #fff;
   letter-spacing: 1px;
   padding: 10px;
   font-size: 16px;
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   width: 100px;
 }
 
@@ -122,9 +122,33 @@ h1{
   background-color:rgb(254 254 254)!important;
 }
 .episodes-para span{
-  background-color:rgb(183 233 233) !important;
+  /* background-color:rgb(183 233 233) !important;   */
   font-size: 22px;
 }
+
+
+.rhap_progress-indicator{
+background: #216187 !important;
+}
+
+.rhap_volume-button{
+  color: #216187 !important;
+}
+
+.rhap_repeat-button{
+  color: #206087 !important;
+}
+
+.rhap_time{
+  display: none !important;
+}
+
+
+.rhap_main-controls-button{
+  color: #216187 !important;
+}
+
+
 
 .image-card img{
   width: 100px;
@@ -173,4 +197,61 @@ h3 u{
     text-align: center;
   }
   
+}
+
+.playlist-overlay{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 2px 2px #262626, 0 3px 4px #262626;
+}
+.playlist-container{
+  display: flex;
+}
+
+
+.playlist-banner{
+  display: flex;
+  justify-content: center;
+}
+
+.playlist-col{
+  width:100%;
+}
+
+.playlist-col .rhap_container{
+  box-shadow: none;
+}
+
+.playlist-episodeNumber, .episode-number{
+  color: #676a6c;
+}
+
+.episode-number{
+  font-size: 14px;
+}
+
+.episode-card{
+  padding: 10px 20px;
+  border-radius: 10px;
+  position: relative;
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.episode-play-button{
+  font-size: 40px;
+  opacity: 0;
+}
+
+.episode-card:hover{
+  background-color: #fafafa;
+  box-shadow: 0 1px 2px #fafafa, 0 1px 2px #fafafa;
+}
+
+.episode-card:hover .episode-play-button{
+  opacity: 1;
 }

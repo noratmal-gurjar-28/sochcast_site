@@ -30,9 +30,6 @@ export const fetchEpisodes = createAsyncThunk('podcast/fetchEpisodes', async (sl
   }
 });
 
-
-
-
 const podcastSlice = createSlice({
   name: 'podcast',
   initialState,
@@ -46,26 +43,26 @@ const podcastSlice = createSlice({
       })
       .addCase(fetchShows.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.shows = action.payload; // Update shows state
-        console.log("Shows Data:", state.shows); // Log shows data
+        state.shows = action.payload; 
+        console.log("Shows Data:", state.shows); 
       })
       .addCase(fetchShows.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
-        console.error("Fetch Shows Error:", action.error.message); // Log errors
+        console.error("Fetch Shows Error:", action.error.message); 
       })
       .addCase(fetchEpisodes.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(fetchEpisodes.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.episodes = action.payload; // Update episodes state
-        console.log("Episodes Data:", state.episodes); // Log episodes data
+        state.episodes = action.payload; 
+        console.log("Episodes Data:", state.episodes);
       })
       .addCase(fetchEpisodes.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
-        console.error("Episodes Shows Error:", action.error.message); // Log errors
+        console.error("Episodes Shows Error:", action.error.message); 
       });
   },
 });

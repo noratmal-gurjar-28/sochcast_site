@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchEpisodes } from "../features/podcast/podcastSlice";
-import { Link } from "react-router-dom";
 import { CiShare2 } from "react-icons/ci";
 import { IoIosAddCircle } from "react-icons/io";
+import AudoPlayer from '../components/mp3Player/player'
+import { IoPlayCircleOutline } from "react-icons/io5";
 
 const EpisodeList = () => {
   const { slug } = useParams();
@@ -13,21 +14,30 @@ const EpisodeList = () => {
   const status = useSelector((state) => state.podcast.status);
   const error = useSelector((state) => state.podcast.error);
   const [showOverviewInfo, setshowOverviewInfo] = useState({});
+  const [episodesUrl, setEpisodesUrl] = useState([]);
 
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [audioSrc, setAudioSrc] = useState(null);
+  const updateEpisodesList = useCallback((episodesData) => {
+    const manipulatedEpisodeData = episodesData.map((episode) => ({
+      url: episode.file,
+      name: episode.name,
+      episodeNumber: episode.episode_number,
+      episodeImage: episode.episode_compressed_image,
+      duration: episode.duration
+    }));
+    setEpisodesUrl(manipulatedEpisodeData);
+  }, []);
 
-  const handlePlayClick = (audioUrl) => {
-    setAudioSrc(audioUrl);
-    setIsPopupOpen(true);
+  const handleEpisodeSelection = (selectedEpisode) => {
+    const remainingEpisodes = episodes.filter((episode) => episode.id !== selectedEpisode.id);
+    const updatedEpisodesList = [selectedEpisode, ...remainingEpisodes];
+    updateEpisodesList(updatedEpisodesList);
   };
 
-  const handleClosePopup = () => {
-    setIsPopupOpen(false);
-    setAudioSrc(null);
+  const formatDuration = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds}`;
   };
-
-  console.log("one data ", showOverviewInfo);
 
   useEffect(() => {
     if (slug) {
@@ -38,8 +48,9 @@ const EpisodeList = () => {
   useEffect(() => {
     if (episodes) {
       setshowOverviewInfo(episodes[0]?.shows[0]);
+      updateEpisodesList(episodes);
     }
-  }, [episodes]);
+  }, [episodes, updateEpisodesList]);
 
   if (status === "loading")
     return <h5 className="mt-5 pt-5 loader text-center">Loading...</h5>;
@@ -49,7 +60,6 @@ const EpisodeList = () => {
     <div className=" pt-4">
       <div className="container">
         <div className="">
-          {console.log(showOverviewInfo)}
           <div className="card-container" key={showOverviewInfo?.id}>
             <div className="row">
               <div className="col-md-12 col-12 col-xl-3 col-lg-3 mt-3">
@@ -70,32 +80,16 @@ const EpisodeList = () => {
                     }}
                   />
 
-                  <h6 className="text-success pb-3 pt-2">
-                    Format: {showOverviewInfo?.show_format}
+                <div>
+                <h6 className="text-success pb-3 pt-2">
+                    Type: {showOverviewInfo?.show_format}
                   </h6>
-                  <button
-                    className="btn-play"
-                    type="submit"
-                    onClick={() => handlePlayClick(showOverviewInfo?.file)}
-                  >
-                    Play
-                  </button>
-
-                  {isPopupOpen && (
-                    <div className="popup-overlay">
-                      <div className="popup-content text-center">
-                        <button
-                          className="close-popup"
-                          onClick={handleClosePopup}
-                        >
-                          Close the Player
-                        </button>
-                        <audio className="audio-tag" controls src={audioSrc}>
-                          Your browser does not support the audio element.
-                        </audio>
-                      </div>
-                    </div>
+                  {showOverviewInfo && showOverviewInfo?.hosts && (showOverviewInfo?.hosts[0]?.first_name || showOverviewInfo?.hosts[0]?.last_name) && (
+                    <h6 className=" pb-3 pt-2">
+                      By: {`${showOverviewInfo?.hosts[0]?.first_name} ${showOverviewInfo?.hosts[0]?.last_name}`}
+                    </h6>
                   )}
+                </div>
                 </div>
               </div>
             </div>
@@ -114,22 +108,22 @@ const EpisodeList = () => {
         {episodes && episodes.length > 0 ? (
           <div className="pb-5">
             {episodes.map((episode) => (
-              <div className="card-container" key={episode.id}>
-                <div className="col-12 col-md-1">
-                  <p className="mb-0">SL No: {episode.episode_number}</p>
+              <div className="card-container episode-card" key={episode.id} onClick={() => handleEpisodeSelection(episode)}>
+                <div className="episode-play-button col-1 pr-2">
+                  <IoPlayCircleOutline />
                 </div>
                 <div className="image-card col-12 col-md-2">
                   <img className="mx-auto" src={episode.episode_image} />
                 </div>
                 <div className="col-12 col-md-5">
+                  <p className="episode-number mb-0">Episode No: {episode.episode_number}</p>
                   <h6 className="episode-name mb-0">{episode.name}</h6>
                 </div>
                 <div className="col-12 col-md-1">
                   <div>{episode.publish_date}</div>
                 </div>
-
                 <div className="col-12 col-md-1">
-                  <div>{episode.duration} Min</div>
+                  <div>{formatDuration(episode.duration)}</div>
                 </div>
                 <div className="col-12 col-md-1 icon-pointer">
                   <CiShare2 className="" size={20} />
@@ -139,6 +133,7 @@ const EpisodeList = () => {
                 </div>
               </div>
             ))}
+            <AudoPlayer episodesUrl={episodesUrl} />
           </div>
         ) : (
           <p>No Episodes Available</p>
